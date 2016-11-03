@@ -1,0 +1,11 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+# app/config/routing.yml
+user_registration:
+    path:     /register
+    defaults: { _controller: AppBundle:Registration:register }
+
+login:
+  path: /login
+  defaults: {_controller: AppBundle:Security:login}
