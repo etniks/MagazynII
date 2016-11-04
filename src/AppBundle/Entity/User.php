@@ -140,7 +140,6 @@ class User implements UserInterface, \Serializable
     }
 
 
-
     /**
      * Get id
      *
@@ -165,8 +164,9 @@ class User implements UserInterface, \Serializable
     {
         list(
             $this->id,
-            $this->username,
-            $this->password
+            $this->name,
+            $this->password,
+
             ) = unserialize($serialized);
     }
 }

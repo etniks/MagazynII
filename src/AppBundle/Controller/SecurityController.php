@@ -15,7 +15,7 @@ class SecurityController extends Controller
 {
 
     /**
-     * #Route("/login",name="login")
+     * @Route("/login",name="login")
      *
      *
      */
@@ -33,4 +33,6 @@ class SecurityController extends Controller
             'error'=> $error,
         ));
     }
+
+
 }
