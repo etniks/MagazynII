@@ -1,0 +1,156 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 id="db_logo">Lista Produktów</h1>
+
+
+
+    <input type="text" id="myInput" onkeyup="searchModel()" placeholder="szukaj...">
+
+    <table id="myTable" class="tablica">
+        <thead>
+        <tr>
+
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Opis</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <button>
+                                <a href="{{ path('products_show', { 'id' : product.id }) }}">Pokaż</a>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button>
+                                <a href="{{ path('products_edit', { 'id': product.id }) }}">Edytuj</a>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <a href="{{ path('shopping_basket_add',{'productId': product.id }) }}">Dodaj do koszyka</a>
+                            </button>
+                        </li>
+                        <li><button onclick="document.getElementById('id01').style.display='block'">Ocen</button></li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="id01" class="modal">
+        <button onclick="document.getElementById('id01').style.display='none' "
+                class="close" title="close modal">&times;</button>
+
+        <!-- Content -->
+        <form class="modal-content animate" action="loginAction">
+            <div class="container">
+                <label><b>Ocen produkt</b></label>
+
+
+            </div>
+            <ul class="pagination">
+                <li><a href="{{ path('products_index') }}">&laquo;</a></li>
+                <li><a href="{{ path('products_index') }}">1</a></li>
+                <li><a class="active" href="{{ path('products_index') }}">2</a></li>
+                <li><a href="{{ path('products_index') }}">3</a></li>
+                <li><a href="{{ path('products_index') }}">4</a></li>
+                <li><a href="{{ path('products_index') }}">5</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" onclick="document.getElementById('id01').style.display='none' "
+                        class="cancelbtn">Zamknij</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="snackbar">Dziękujemy za wystawienie oceny!</div>
+
+    <ul>
+
+        <button id="newItem">
+            <a href="{{ path('products_new') }}">Dodaj przedmiot</a>
+        </button>
+
+        <button id="shoppingCart">
+            <a href="{{ path('shopping_basket') }}">Koszyk</a>
+        </button>
+
+
+        <button id="navbtn" onclick="openNav()">open</button>
+    </ul>
+
+    <div id="myNav" class ="overlay">
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <div class="overlay-content">
+            <a href="{{ path('homepage')}}"> Strona Główna </a>
+            <a href="#"> Produkty</a>
+            <a href="#"> Kontakt</a>
+        </div>
+    </div>
+
+
+
+    <script>
+        function searchModel() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            for(i = 0; i < tr.length; i++){
+                td = tr[i].getElementsByTagName("td")[0];
+                if(td){
+                    if(td.innerHTML.toUpperCase().indexOf(filter) > -1){
+                        tr[i].style.display = "";
+
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        var modal = document.document.getElementById('id01');
+        window.onclick=function(event){
+            if (event.target ==modal){
+                modal.style.display = "none";
+            }
+        }
+
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+
+        function closeNav(){
+            document.getElementById("myNav").style.width = "0%";
+        }
+        function snackBar(){
+            var x = document.getElementById("snackbar");
+
+            x.className ="show";
+
+            setTimeout(function(){x.className = x.className.replace("show", "");},3000);
+        }
+    </script>
+{% endblock %}
